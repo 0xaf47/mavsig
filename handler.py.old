@@ -67,26 +67,28 @@ def gsc_handler(connection_string, baud_rate):
     key_hash = ""
     sig_hash = ""
     while True:
-        print("Getting file...")
-        time.sleep(10)
-        mav = mavftp(connection_string, baud_rate)
-        print("Connected")
-        mav.get("output.sig")
-        time.sleep(5)
-        mav.close()
+        if get_file_hash("out.bin") == sig_hash:
+            print("Getting file...")
+            time.sleep(10)
+            mav = mavftp(connection_string, baud_rate)
+            print("Connected")
+            mav.get("output.sig")
+            time.sleep(5)
+            mav.close()
 
-        ver_res = verify_signature("key.txt", "out.bin", "public_key.pem")
-        if ver_res == True:
-            print ("Signature successfully verified")
         else:
-            print("Signature check failed")
-        sig_hash = get_file_hash("out.bin")
-        gen_key()
-        mav = mavftp(connection_string, baud_rate)
-        print("Connected")
-        mav.send("key.txt")
-        time.sleep(5)
-        mav.close()
+            ver_res = verify_signature("key.txt", "out.bin", "public_key.pem")
+            if ver_res == True:
+                print ("Key successfully verified")
+            else:
+                print("Key check failed")
+            sig_hash = get_file_hash("out.bin")
+            gen_key()
+            mav = mavftp(connection_string, baud_rate)
+            print("Connected")
+            mav.send("key.txt")
+            time.sleep(5)
+            mav.close()
 
 
 def drone_handler(connection_string, baud_rate):
@@ -129,8 +131,8 @@ print(args.mode)
 print(args.baudrate)
 print(args.port)
 print(get_file_hash("out.bin"))
-if args.mode == "gcs":
-    print("Running in gcs mode")
+if args.mode == "gsc":
+    print("Running in gsc mode")
     gsc_handler(args.port, args.baudrate)
 
 if args.mode == "drone":

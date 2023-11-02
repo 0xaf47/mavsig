@@ -31,7 +31,7 @@ class FileTransfer:
         for part in parts:
             self.mav.mav.file_transfer_protocol_send(0, 1, 1, part)
             time.sleep(0.1)
-            print(part)
+            #print(part)
         ACK = gen_payload(3,"ACK")
         ACK[0] = parts[-1][0]+1
         self.mav.mav.file_transfer_protocol_send(0, 1, 1, ACK)
@@ -65,9 +65,9 @@ class FileTransfer:
                     continue
                 # обработка пакета
                 if msg.get_type() == 'FILE_TRANSFER_PROTOCOL':
-                    print('FTP received')
-                    print(msg.payload)
-                    print(msg.payload[6])
+                    #print('FTP received')
+                    #print(msg.payload)
+                    #print(msg.payload[6])
                     if msg.payload[5] == 15 and msg.payload[3] != 129:
                         data.append(msg.payload)
                     if msg.payload[3] == 129:
@@ -157,7 +157,7 @@ def gen_payload(session, op, filename=None, file=None):
             if block == blocks-1:
                 end_index = start_index + file_len%block_len
                 payload2[4] = file_len%block_len
-                print("end index is " + str(end_index))
+                #print("end index is " + str(end_index))
                 payload2[start_index:end_index] = file[(block)*block_len:file_len]
             file_payload.append(payload2)
         file_payload = tuple(file_payload)
