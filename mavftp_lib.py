@@ -96,9 +96,12 @@ class FileTransfer:
 
     def wait(self, text=1):
         while True:
-            print("Waiting for new keyfile...")
-            msg = self.mav.recv_match(type='STATUSTEXT', blocking=True)
-            print(msg.get_payload())
+             msg = mav.recv_match()
+                if not msg:
+                    continue
+                # обработка пакета
+                print(msg)
+                if msg.get_type() == 'STATUSTEXT':
             if msg.get_payload() != None:
                 print("Received response " + msg.get_payload())
                 return(msg.get_payload())
