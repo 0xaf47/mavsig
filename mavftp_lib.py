@@ -96,15 +96,15 @@ class FileTransfer:
 
     def wait(self, text=1):
         while True:
-             msg = mav.recv_match()
-                if not msg:
-                    continue
+            msg = self.mav.recv_match()
+            if not msg:
+                continue
                 # обработка пакета
                 print(msg)
                 if msg.get_type() == 'STATUSTEXT':
-            if msg.get_payload() != None:
-                print("Received response " + msg.get_payload())
-                return(msg.get_payload())
+                    if msg.get_payload() != None:
+                        print("Received response " + msg.get_payload())
+                        return(msg.get_payload())
 
             time.sleep(0.1)
 
