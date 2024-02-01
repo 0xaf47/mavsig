@@ -74,9 +74,9 @@ def gsc_handler(connection_string, baud_rate):
         print("Connected")
         mav.send("key.txt")
         time.sleep(5)
-        mav.message("Sent")
-        time.sleep(10)
+        mav.message(get_file_hash("key.txt"))
         mav.close()
+        time.sleep(10)
         mav = mavftp(connection_string, baud_rate)
         print("Connected")
         mav.get("output.sig")
@@ -90,32 +90,7 @@ def gsc_handler(connection_string, baud_rate):
             print("Key check failed")
 
 
-'''
-    while True:
-        if get_file_hash("out.bin") == sig_hash:
-            print("Getting file...")
-            time.sleep(10)
-            mav = mavftp(connection_string, baud_rate)
-            print("Connected")
-            mav.get("output.sig")
-            time.sleep(5)
-            mav.close()
 
-        else:
-            ver_res = verify_signature("key.txt", "out.bin", "public_key.pem")
-            if ver_res == True:
-                print ("Key successfully verified")
-            else:
-                print("Key check failed")
-            sig_hash = get_file_hash("out.bin")
-            gen_key()
-            mav = mavftp(connection_string, baud_rate)
-            print("Connected")
-            mav.send("key.txt")
-            time.sleep(5)
-            mav.close()
-
-'''
 def drone_handler(connection_string, baud_rate):
     key_hash = ""
     sig_hash = ""
@@ -124,7 +99,7 @@ def drone_handler(connection_string, baud_rate):
     while True:
         mav = mavftp(connection_string, baud_rate)
         print("Connected")
-        mav.wait("Sent")
+        key_hash = mav.wait()
         print("Getting file...")
 
         mav = mavftp(connection_string, baud_rate)
@@ -132,7 +107,12 @@ def drone_handler(connection_string, baud_rate):
         mav.get("key.txt")
         time.sleep(1)
         mav.close()
+        if not (key_hash == get_file_hash("out.bin")):
+            print("Error downloading keyfile, reconnect...")
+            continue
         sign()
+        time.sleep(0.5)
+        print("Singed")
         mav = mavftp(connection_string, baud_rate)
         print("Connected")
         mav.send("output.sig")
@@ -140,28 +120,7 @@ def drone_handler(connection_string, baud_rate):
         mav.close()
 
 
-'''
-
-    while True:
-        if get_file_hash("out.bin") == key_hash:
-            print("Getting file...")
-            time.sleep(10)
-            mav = mavftp(connection_string, baud_rate)
-            print("Connected")
-            mav.get("key.txt")
-            time.sleep(5)
-            mav.close()
-
-        else:
-            print("Signing")
-            key_hash = get_file_hash("out.bin")
-            mav = mavftp(connection_string, baud_rate)
-            print("Connected")
-            mav.send("output.sig")
-            time.sleep(5)
-            mav.close()
-
-'''         
+     
 
 # Создаем объект парсера
 parser = argparse.ArgumentParser(description='Mavsig v1.0')

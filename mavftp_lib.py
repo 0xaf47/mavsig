@@ -91,15 +91,15 @@ class FileTransfer:
             else:
                 time.sleep(1)
 
-    def message(self, text="Hello"):
+    def message(self, text=1):
         self.mav.mav.statustext_send(mavutil.mavlink.MAV_SEVERITY_INFO, text)
 
-    def wait(self, text="Hello"):
+    def wait(self, text=1):
         while True:
             msg = self.master.recv_match(type='STATUSTEXT', blocking=True)
-            if msg.get_payload() == text:
-                print("Received response")
-                break
+            if msg.get_payload() != None:
+                print("Received response " + msg.get_payload())
+                return(msg.get_payload())
             time.sleep(0.1)
 
 def extract_data(data):
