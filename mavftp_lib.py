@@ -103,7 +103,7 @@ class FileTransfer:
             print(msg)
             if msg.get_type() == 'STATUSTEXT':
                 if msg.get_payload() != None:
-                    print("Received response " + msg.get_payload())
+                    print((msg.get_payload()).decode('ISO-8859-1'))
                     return(msg.get_payload())
 
             time.sleep(0.1)
