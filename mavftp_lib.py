@@ -92,7 +92,7 @@ class FileTransfer:
                 time.sleep(1)
 
     def message(self, text=1):
-        self.mav.mav.statustext_send(mavutil.mavlink.MAV_SEVERITY_INFO, text)
+        self.mav.mav.statustext_send(mavutil.mavlink.MAV_SEVERITY_INFO, text.encode('utf-8'))
 
     def wait(self, text=1):
         while True:
