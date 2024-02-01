@@ -91,12 +91,11 @@ class FileTransfer:
             else:
                 time.sleep(1)
 
-    def message(self, text=1):
+    def message(self, text="hello"):
         self.mav.mav.statustext_send(mavutil.mavlink.MAV_SEVERITY_INFO, text.encode('utf-8'))
 
     def wait(self, text=1):
         while True:
-            print("Waiting for sync message")
             msg = self.mav.recv_match()
             if not msg:
                 continue
