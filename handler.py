@@ -74,7 +74,7 @@ def gsc_handler(connection_string, baud_rate):
         print("Connected")
         mav.send("key.txt")
         time.sleep(5)
-        mav.message(get_file_hash("key.txt"))
+        mav.message(str(get_file_hash("key.txt")))
         mav.close()
         time.sleep(10)
         mav = mavftp(connection_string, baud_rate)
