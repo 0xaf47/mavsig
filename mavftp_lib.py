@@ -97,9 +97,11 @@ class FileTransfer:
     def wait(self, text=1):
         while True:
             msg = self.mav.recv_match(type='STATUSTEXT', blocking=True)
+            print(msg.get_payload())
             if msg.get_payload() != None:
                 print("Received response " + msg.get_payload())
                 return(msg.get_payload())
+
             time.sleep(0.1)
 
 def extract_data(data):
