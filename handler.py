@@ -138,10 +138,11 @@ print(args.mode)
 print(args.baudrate)
 print(args.port)
 print(get_file_hash("out.bin"))
-if args.mode == "gsc":
-    print("Running in gsc mode")
+if args.mode == "gcs":
+    print("Running in gcs mode")
     gsc_handler(args.port, args.baudrate)
 
 if args.mode == "drone":
+    print("Running in drone mode")
     drone_handler(args.port, args.baudrate)
 
