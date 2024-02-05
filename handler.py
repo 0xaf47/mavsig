@@ -9,7 +9,11 @@ import hashlib
 import os
 def sign(input_file="out.bin", output_file="output.sig"):
     sign_command = ['pkcs11-tool', '--module', 'librtpkcs11ecp.so', '--login', '--pin', '12345678', '--mechanism', 'SHA256-RSA-PKCS', '--sign', '--input-file', input_file, '--output-file', output_file, '--id', '0100']
-
+    try:
+        subprocess.run(command, check=True)
+        print("Command executed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing command: {e}")
 def verify_signature(input_file, signature_file, public_key_file):
     # Загружаем открытый ключ из файла
     with open(public_key_file, 'rb') as key_file:
@@ -57,7 +61,7 @@ def get_file_hash(filename, algorithm='sha256', block_size=65536):
 def gen_key(filename="key.txt"):
     # Генерируем 64 случайных байта
     key = os.urandom(64)
-    #key = bytes([0x02] * 64)
+    #key = bytes([0x04] * 64)
     # Записываем ключ в файл
     with open(filename, 'wb') as f:
         f.write(key)
