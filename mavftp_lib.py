@@ -91,7 +91,7 @@ class FileTransfer:
             else:
                 time.sleep(1)
 
-    def message(self, text="hello"):
+    def message(self, text="hash"+ 64*"0"):
         self.mav.mav.statustext_send(mavutil.mavlink.MAV_SEVERITY_INFO, text.encode('ISO-8859-1'))
 
     def wait(self):
@@ -103,7 +103,8 @@ class FileTransfer:
             #print(msg)
             
             if msg.get_type() == 'STATUSTEXT':
-                if msg.get_payload() != None:
+                payload = msg.get_payload()
+                if payload != None and len(payload) > 60:
                     print((msg.get_payload()).decode('ISO-8859-1'))
                     return(msg.get_payload())
 
