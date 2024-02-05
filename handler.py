@@ -52,7 +52,7 @@ def get_file_hash(filename, algorithm='sha256', block_size=65536):
     # Получаем хэш в виде строки
     hash_str = hash_obj.hexdigest()
 
-    return hash_str
+    return str(hash_str)
 
 def gen_key(filename="key.txt"):
     # Генерируем 64 случайных байта
@@ -112,7 +112,7 @@ def drone_handler(connection_string, baud_rate):
         mav.get("key.txt")
         time.sleep(1)
         mav.close()
-        if not (key_hash == get_file_hash("out.bin")):
+        if not (key_hash[:10] == get_file_hash("out.bin")[:10]):
             print("Error downloading keyfile, reconnect...")
             continue
         sign()
