@@ -98,7 +98,8 @@ def gsc_handler(connection_string, baud_rate):
         '''
 
         mav.get("output.sig")
-        time.sleep(1)
+        time.sleep(2)
+        mav.close()
         ver_res = verify_signature("key.txt", "out.bin", "public_key.pem")
         if ver_res == True:
             print ("Key successfully verified")
@@ -119,8 +120,6 @@ def drone_handler(connection_string, baud_rate):
         print(bytes(key_hash.encode('utf-8')))
         print("Getting file...")
 
-        mav = mavftp(connection_string, baud_rate)
-        print("Connected")
         mav.get("key.txt")
         time.sleep(1)
         if not (key_hash[4:10] == get_file_hash("out.bin")[:6]):
@@ -131,7 +130,6 @@ def drone_handler(connection_string, baud_rate):
         sign()
         time.sleep(0.5)
         print("Singed")
-        print("Connected")
         mav.send("output.sig")
         time.sleep(1)
         mav.close()
