@@ -92,7 +92,7 @@ class FileTransfer:
                 time.sleep(1)
 
     def message(self, text="hello"):
-        self.mav.mav.statustext_send(mavutil.mavlink.MAV_SEVERITY_INFO, text.encode('utf-8'))
+        self.mav.mav.statustext_send(mavutil.mavlink.MAV_SEVERITY_INFO, text.encode('ISO-8859-1'))
 
     def wait(self):
         while True:
@@ -100,7 +100,7 @@ class FileTransfer:
             if not msg:
                 continue
                 # обработка пакета
-            print(msg)
+            #print(msg)
             
             if msg.get_type() == 'STATUSTEXT':
                 if msg.get_payload() != None:
