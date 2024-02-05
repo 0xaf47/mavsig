@@ -78,7 +78,7 @@ def gsc_handler(connection_string, baud_rate):
         time.sleep(5)
         print("Current keyfile is " + get_file_hash("key.txt"))
         #mav.message((get_file_hash("key.txt")).encode())
-        mav.message()
+        mav.message(get_file_hash("key.txt"))
         print("hello message sent")
         mav.close()
         time.sleep(10)
@@ -113,6 +113,7 @@ def drone_handler(connection_string, baud_rate):
         time.sleep(1)
         mav.close()
         if not (key_hash[:10] == get_file_hash("out.bin")[:10]):
+            print(key_hash[:10], get_file_hash("out.bin")[:10])
             print("Error downloading keyfile, reconnect...")
             continue
         sign()
