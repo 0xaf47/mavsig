@@ -10,7 +10,7 @@ import os
 def sign(input_file="out.bin", output_file="output.sig"):
     sign_command = ['pkcs11-tool', '--module', 'librtpkcs11ecp.so', '--login', '--pin', '12345678', '--mechanism', 'SHA256-RSA-PKCS', '--sign', '--input-file', input_file, '--output-file', output_file, '--id', '0100']
     try:
-        subprocess.run(command, check=True)
+        subprocess.run(sign_command, check=True)
         print("Command executed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error executing command: {e}")
@@ -61,7 +61,7 @@ def get_file_hash(filename, algorithm='sha256', block_size=65536):
 def gen_key(filename="key.txt"):
     # Генерируем 64 случайных байта
     key = os.urandom(64)
-    #key = bytes([0x04] * 64)
+
     # Записываем ключ в файл
     with open(filename, 'wb') as f:
         f.write(key)
@@ -87,21 +87,7 @@ def gsc_handler(connection_string, baud_rate):
 
         mav.close()
         time.sleep(10)
-        '''
-        print("Waiting for signature")
-        sig_hash = mav.wait()
-        print(bytes(key_hash.encode('utf-8')))
-        print("Getting file...")
 
-        mav.get("output.sig")
-        time.sleep(1)
-        mav.close()
-        if not (sig_hash[4:10] == get_file_hash("out.bin")[:6]):
-            print(sig_hash[4:10], get_file_hash("out.bin")[:6])
-            print("Error downloading sigfile, reconnect...")
-            continue
-        print("New sigfile received, signing... ")
-        '''
 
         mav = mavftp(connection_string, baud_rate)
         print("Connected")
@@ -114,7 +100,6 @@ def gsc_handler(connection_string, baud_rate):
             print ("Key successfully verified")
         else:
             print("Key check failed")
-        input()
 
 
 
@@ -140,7 +125,7 @@ def drone_handler(connection_string, baud_rate):
         print("New keyfile received, signing... ")
         sign()
         time.sleep(1.5)
-        print("Singed")
+        print("Signed")
 
         mav = mavftp(connection_string, baud_rate)
         mav.send("output.sig")
@@ -149,7 +134,7 @@ def drone_handler(connection_string, baud_rate):
 
 
      
-
+#начало исполнения
 # Создаем объект парсера
 parser = argparse.ArgumentParser(description='Mavsig v1.0')
 
