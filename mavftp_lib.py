@@ -104,7 +104,8 @@ class FileTransfer:
             
             if msg.get_type() == 'STATUSTEXT':
                 payload = msg.get_payload()
-                #print("hey " + payload.decode('ISO-8859-1'))
+                print("hey " + payload.decode('ISO-8859-1'))
+                print(len(payload.decode('ISO-8859-1')))
                 if payload != None and (len(payload.decode('ISO-8859-1')) > 60):
                     print(payload.decode('ISO-8859-1'))
                     return(payload)
