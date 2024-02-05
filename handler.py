@@ -82,7 +82,7 @@ def gsc_handler(connection_string, baud_rate):
         print("hello message sent")
 
         mav.close()
-        time.sleep(5)
+        time.sleep(10)
         '''
         print("Waiting for signature")
         sig_hash = mav.wait()
@@ -110,6 +110,7 @@ def gsc_handler(connection_string, baud_rate):
             print ("Key successfully verified")
         else:
             print("Key check failed")
+        input()
 
 
 
@@ -134,7 +135,7 @@ def drone_handler(connection_string, baud_rate):
             continue
         print("New keyfile received, signing... ")
         sign()
-        time.sleep(0.5)
+        time.sleep(1.5)
         print("Singed")
 
         mav = mavftp(connection_string, baud_rate)
