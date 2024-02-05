@@ -131,7 +131,11 @@ def drone_handler(connection_string, baud_rate):
         mav = mavftp(connection_string, baud_rate)
         print("Connected")
         mav.send("output.sig")
+        time.sleep(1)
 
+        mav.message(get_file_hash("output.sig"))
+        mav.message(get_file_hash("output.sig"))
+            
         mav.message(get_file_hash("output.sig"))
         print("hello message sent")
         time.sleep(1)

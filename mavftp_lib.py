@@ -100,9 +100,10 @@ class FileTransfer:
             if not msg:
                 continue
                 # обработка пакета
-            #print(msg)
+
             
             if msg.get_type() == 'STATUSTEXT':
+                print(msg)
                 payload = msg.get_payload()
                 if payload != None and (len(payload.decode('ISO-8859-1')) > 50):
                     print((payload.decode('ISO-8859-1')).replace("ý", ""))
