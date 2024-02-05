@@ -56,8 +56,8 @@ def get_file_hash(filename, algorithm='sha256', block_size=65536):
 
 def gen_key(filename="key.txt"):
     # Генерируем 64 случайных байта
-    #key = os.urandom(64)
-    key = bytes([0x02] * 64)
+    key = os.urandom(64)
+    #key = bytes([0x02] * 64)
     # Записываем ключ в файл
     with open(filename, 'wb') as f:
         f.write(key)
@@ -117,6 +117,7 @@ def drone_handler(connection_string, baud_rate):
             print(key_hash[4:10], get_file_hash("out.bin")[:6])
             print("Error downloading keyfile, reconnect...")
             continue
+        print("New keyfile received, signing... ")
         sign()
         time.sleep(0.5)
         print("Singed")
