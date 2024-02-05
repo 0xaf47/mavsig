@@ -113,8 +113,8 @@ def drone_handler(connection_string, baud_rate):
         mav.get("key.txt")
         time.sleep(1)
         mav.close()
-        if not (key_hash[:10] == get_file_hash("out.bin")[:10]):
-            print(key_hash[:10], get_file_hash("out.bin")[:10])
+        if not (key_hash[4:10] == get_file_hash("out.bin")[:6]):
+            print(key_hash[4:10], get_file_hash("out.bin")[:6])
             print("Error downloading keyfile, reconnect...")
             continue
         sign()
