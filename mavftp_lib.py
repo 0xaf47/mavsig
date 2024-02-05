@@ -103,7 +103,7 @@ class FileTransfer:
 
             
             if msg.get_type() == 'STATUSTEXT':
-                print(msg)
+                #print(msg)
                 payload = msg.get_payload()
                 if payload != None and (len(payload.decode('ISO-8859-1')) > 50):
                     print((payload.decode('ISO-8859-1')).replace("ý", ""))

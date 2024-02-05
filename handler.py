@@ -81,6 +81,7 @@ def gsc_handler(connection_string, baud_rate):
         mav.message(get_file_hash("key.txt"))
         print("hello message sent")
         time.sleep(5)
+        '''
         print("Waiting for signature")
         sig_hash = mav.wait()
         print(bytes(key_hash.encode('utf-8')))
@@ -94,7 +95,7 @@ def gsc_handler(connection_string, baud_rate):
             print("Error downloading sigfile, reconnect...")
             continue
         print("New sigfile received, signing... ")
-
+        '''
         ver_res = verify_signature("key.txt", "out.bin", "public_key.pem")
         if ver_res == True:
             print ("Key successfully verified")
@@ -133,11 +134,7 @@ def drone_handler(connection_string, baud_rate):
         mav.send("output.sig")
         time.sleep(1)
 
-        mav.message(get_file_hash("output.sig"))
-        mav.message(get_file_hash("output.sig"))
-            
-        mav.message(get_file_hash("output.sig"))
-        print("hello message sent")
+
         time.sleep(1)
         mav.close()
 
