@@ -97,16 +97,16 @@ class FileTransfer:
     def wait(self):
         while True:
             msg = self.mav.recv_match()
-            #if not msg:
-             #   continue
+            if not msg:
+                continue
                 # обработка пакета
             print(msg)
-            '''
+            
             if msg.get_type() == 'STATUSTEXT':
                 if msg.get_payload() != None:
                     print((msg.get_payload()).decode('ISO-8859-1'))
                     return(msg.get_payload())
-'''
+
             time.sleep(0.1)
 
 def extract_data(data):

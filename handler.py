@@ -71,8 +71,10 @@ def gsc_handler(connection_string, baud_rate):
     while True:
         gen_key()
         mav = mavftp(connection_string, baud_rate)
+        
         print("Connected")
         mav.send("key.txt")
+
         time.sleep(5)
         print("Current keyfile is " + get_file_hash("key.txt"))
         #mav.message((get_file_hash("key.txt")).encode())
