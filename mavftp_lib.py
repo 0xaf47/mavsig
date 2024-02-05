@@ -94,11 +94,11 @@ class FileTransfer:
     def message(self, text="hello"):
         self.mav.mav.statustext_send(mavutil.mavlink.MAV_SEVERITY_INFO, text.encode('utf-8'))
 
-    def wait(self, text=1):
+    def wait(self):
         while True:
             msg = self.mav.recv_match()
-            if not msg:
-                continue
+            #if not msg:
+             #   continue
                 # обработка пакета
             print(msg)
             if msg.get_type() == 'STATUSTEXT':
