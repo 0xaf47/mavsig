@@ -105,6 +105,7 @@ def drone_handler(connection_string, baud_rate):
         mav = mavftp(connection_string, baud_rate)
         print("Connected")
         key_hash = mav.wait()
+        print(bytes(key_hash.encode('utf-8')))
         print("Getting file...")
 
         mav = mavftp(connection_string, baud_rate)
